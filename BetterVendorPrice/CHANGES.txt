@@ -1,0 +1,10 @@
+lightweight tag 9d6d80e6ac5c813733607138f72c84925fe10f2c v1.05.00-classic
+Author:	Moorea Tv <moorea@ymail.com>
+Date:	Fri Aug 30 01:03:18 2019 -0700
+
+commit 9d6d80e6ac5c813733607138f72c84925fe10f2c
+Author: Moorea Tv <moorea@ymail.com>
+Date:   Fri Aug 30 01:03:18 2019 -0700
+
+    Switching to classic toc 11302 for v1.05.00-classic
+
