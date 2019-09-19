@@ -1,3 +1,61 @@
+# Dominos Changelog
+
+8.2.28
+
+* Fix an error when channeling spells
+
+8.2.27
+
+* Yet more progress bar bugfixes
+* Fix an issue that would cause empty slots to not reappear after switching profiles
+
+8.2.26
+
+* Added a new option Show Count Text - toggles showing item/reagent counts on action buttons
+* Updated the artifact bar display to prioritize the azerite bar
+
+8.2.25
+
+* Added a workaround for cases where the progress bar mode update updated failed
+* Added druid travel form paging options
+* Set statehidden = true on all Blizzard action buttons by default
+* Classic - Added counts to action buttons for abilities that consume reagents
+
+8.2.24
+
+* Add a new progress bar mode setting: Skip Inactive modes. Enabling this skip any inactive progress bar mode when you
+click a progress bar to switch the next mode
+
+8.2.23
+
+* Revert one bar mode being the default setting for the progress bar.
+
+8.2.22
+
+* Fix an issue preventing the main options panel for the progress bar from loading
+
+8.2.21
+
+* Fix an issue causing druid form states to not work properly if the player has a bar set for Moonkin form without having the form
+
+8.2.20
+
+* Skipped version 8.2.19
+* Added a Theme Action Buttons toggle to the main interface window to enable/disable the Dominos look for action buttons
+* Added support for the next version of Masque
+
+8.2.18
+
+* Fix a db migration error for completely new profiles
+
+8.2.17
+
+* Add migration bits for the config change introduced in 8.2.16
+
+8.2.16
+
+* Fixed cases where the progress bar would appear blank
+
 8.2.15
 
 * Automated release

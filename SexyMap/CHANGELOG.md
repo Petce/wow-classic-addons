@@ -1,9 +1,6 @@
 # SexyMap
 
-## [v2-classic](https://github.com/funkydude/SexyMap/tree/v2-classic) (2019-08-12)
-[Full Changelog](https://github.com/funkydude/SexyMap/compare/v1-classic...v2-classic)
+## [v3-classic](https://github.com/funkydude/SexyMap/tree/v3-classic) (2019-09-04)
+[Full Changelog](https://github.com/funkydude/SexyMap/compare/v2-classic...v3-classic)
 
-- Revert accidental locale removals  
-- Buttons: Rename "Calendar" to "Day/Night Indicator" and set the default to always hide.  
-- Hide the "X" button that collapses the minimap.  
-- correct toc version  
+- Buttons: Grab & shrink the tracking button, closes #69  

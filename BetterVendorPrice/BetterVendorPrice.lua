@@ -26,7 +26,7 @@ local L = BVP.L
 -- BVP.debug = 9 -- to debug before saved variables are loaded
 
 BVP.slashCmdName = "bvp"
-BVP.addonHash = "9d6d80e"
+BVP.addonHash = "1b9de11"
 BVP.savedVarName = "betterVendorPriceSaved"
 
 -- default value
@@ -69,12 +69,12 @@ function BVP.Slash(arg) -- can't be a : because used directly as slash command
   if cmd == "v" then
     -- version
     BVP:PrintDefault("BetterVendorPrice " .. BVP.manifestVersion ..
-                       " (9d6d80e) by MooreaTv (moorea@ymail.com)")
+                       " (1b9de11) by MooreaTv (moorea@ymail.com)")
   elseif cmd == "b" then
     local subText = L["Please submit on discord or on https://|cFF99E5FFbit.ly/vendorbug|r  or email"]
     BVP:PrintDefault(L["Better Vendor Price bug report open: "] .. subText)
     -- base molib will add version and date/timne
-    BVP:BugReport(subText, "9d6d80e\n\n" .. L["Bug report from slash command"])
+    BVP:BugReport(subText, "1b9de11\n\n" .. L["Bug report from slash command"])
   elseif cmd == "c" then
     -- Show config panel
     -- InterfaceOptionsList_DisplayPanel(BVP.optionsPanel)
@@ -116,8 +116,9 @@ function BVP:CreateOptionsPanel()
   BVP.optionsPanel = p
   p:addText(L["Better Vendor Price options"], "GameFontNormalLarge"):Place()
   p:addText(L["These options let you control the behavior of BetterVendorPrice"] .. " " .. BVP.manifestVersion ..
-              " 9d6d80e"):Place()
-  p:addText(L["Get Auction House DataBase (|cFF99E5FFAHDB|r) to see auction information on the toolip!"]):Place(0, 16)
+              " 1b9de11"):Place()
+  p:addText(L["Get Auction House DataBase (|cFF99E5FFAHDB|r) v0.12 or newer to see auction information on the toolip!"])
+    :Place(0, 16)
 
   local showFullStack = p:addCheckBox("Show full stack vendor price info",
                                       "Whether to show the up to 3 lines vendor pricing info or skip the full stack one")
@@ -197,8 +198,16 @@ function BVP.ToolTipHook(t)
     auctionData = AuctionDB:AHGetAuctionInfoByLink(link)
   end
   if auctionData.numAuctions then
-    t:AddLine(BVP:format(L["AHDB last scan: % |4auction:auctions;, % |4item:total items;"], auctionData.numAuctions,
-                         auctionData.quantity))
+    local sellers = ", "
+    if auctionData.numSellers then -- compat with older AHDB addon
+      if auctionData.hasUnknownSellers then
+        sellers = BVP:format(L[" (%+ sellers), "], auctionData.numSellers)
+      else
+        sellers = BVP:format(L[" (% |4seller:sellers;), "], auctionData.numSellers)
+      end
+    end
+    t:AddLine(BVP:format(L["AHDB last scan: % |4auction:auctions;"] .. sellers .. L["% |4item:total items;"],
+                         auctionData.numAuctions, auctionData.quantity))
   end
   if auctionData.minBid then
     SetTooltipMoney(t, auctionData.minBid, "STATIC", L["AHDB minbid"], L[" (per item)"])
@@ -214,17 +223,19 @@ function BVP.ToolTipHook(t)
   end
   if itemStackCount > 1 then
     local c = GetMouseFocus()
-    if not c then
-      error("nil GetMouseFocus()")
-    end
-    BVP:Debug(3, "Mouse focus is on % % % %", c:GetName(), c:GetObjectType(), c.count, c.Count)
-    -- This my finding to make it work for AH listings for instance
-    local bn = c:GetName() and (c:GetName() .. "Count")
-    local count = c.count or (c.Count and c.Count:GetText()) or (c.Quantity and c.Quantity:GetText()) or
-                    (bn and _G[bn] and _G[bn]:GetText())
-    count = tonumber(count) or 1
-    if count <= 1 then
-      count = 1
+    local count = 1 -- default
+    if c then
+      -- This my finding to make it work for AH listings for instance
+      local bn = c:GetName() and (c:GetName() .. "Count")
+      BVP:Debug(3, "Mouse focus is on % % % % % %", c:GetName(), c:GetObjectType(), c.count, c.Count, c.Quantity, bn)
+      count = c.count or (c.Count and c.Count:GetText()) or (c.Quantity and c.Quantity:GetText()) or
+                (bn and _G[bn] and _G[bn]:GetText())
+      count = tonumber(count) or 1
+      if count <= 1 then
+        count = 1
+      end
+    else
+      BVP:Debug("Unexpected tooltip call without anything under it")
     end
     local curValue = count * itemSellPrice
     local maxValue = itemStackCount * itemSellPrice
